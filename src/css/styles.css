@@ -1,3 +1,42 @@
+* { border: 1px solid black; }
+
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
+  background-color: whitesmoke;
+  margin: 0px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.company-name {
+ display: flex;
+ align-items: center;
+}
+
+.trips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: scroll;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 5px;
+  border-radius: 25px;
+  margin: 30px;
+  width: 70%;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
