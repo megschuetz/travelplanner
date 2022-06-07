@@ -1,4 +1,4 @@
-# Webpack Starter Kit
+# Travel Planner
 
 ## Clone This Repo
 
