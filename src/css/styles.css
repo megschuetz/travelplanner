@@ -1,9 +1,10 @@
 * { border: 1px solid black; }
 
+
 body {
   /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
   background-color: whitesmoke;
-  margin: 0px;
+  margin: 0px 0px 100px;
 }
 
 header {
@@ -22,7 +23,6 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  overflow: scroll;
 }
 
 .card {
@@ -39,4 +39,10 @@ footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: fixed;
+  height: 50px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

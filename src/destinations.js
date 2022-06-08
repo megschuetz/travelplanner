@@ -1,15 +1,13 @@
 class Destinations {
-  constructor(data, trips){
+  constructor(data){
     this.destinationsRepo = data
-    this.trips = trips
   }
 
-  findDestinations() {
-    const destinationsOfTrips = this.trips.map((trip) => {
-      return this.destinationsRepo.find(destination => destination.id === trip.destinationID)
-    })
-    return destinationsOfTrips
+  findDestination(trip) {
+    return this.destinationsRepo.find(destination => destination.id === trip.destinationID)
   }
+
+
   // totalSpentOnTrips(){
   //   this.trips.forEach() {
   //     this.destinationsRepo.find()

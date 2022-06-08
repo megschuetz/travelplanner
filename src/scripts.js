@@ -10,6 +10,7 @@ import {travelersData, destinationsData, tripsData} from './apiCalls';
 //Query Selectors
 const travelerName = document.querySelector('h2')
 const tripsDisplay = document.querySelector('.trips')
+const costThisYear = document.querySelector('#total-cost-this-year')
 
 
 const displayedUsersID = Math.floor(Math.random() * 50)
@@ -17,7 +18,7 @@ const displayedUsersID = Math.floor(Math.random() * 50)
 Promise.all([travelersData, destinationsData, tripsData])
   .then((data) => {
     travelerHelper(data[0].travelers);
-    displayAllTrips(data[2].trips, data[1].destinations)
+    tripsHelper(data[2].trips, data[1].destinations)
     console.log('data', data)
   })
   .catch((error) => console.log(error));
@@ -28,28 +29,42 @@ function travelerHelper(data) {
   travelerName.innerText = travelRepo.findTraveler(displayedUsersID)
 }
 
-function displayAllTrips(tripData, destinationsData) {
-  const tripsRepo = new Trips(tripData)
-  const allTrips = tripsRepo.getAllTrips(displayedUsersID)
-  console.log('trips', allTrips)
+function tripsHelper(tripsData, destinationsData){
+  const tripsRepo = new Trips(tripsData)
+  const tripsPerTraveler = tripsRepo.getAllTrips(displayedUsersID)
+  
+  const allDestinations = new Destinations(destinationsData)
+  const totalCostThisYear = tripsRepo.totalCostPerYear(tripsPerTraveler, allDestinations)
+  console.log('alltrips', tripsRepo.totalCostPerYear(tripsPerTraveler, allDestinations))
 
-  const destinationsRepo = new Destinations(destinationsData, allTrips)
-  const destinationsOfTrips = destinationsRepo.findDestinations()
-  console.log('dest', destinationsOfTrips)
+  displayAllTrips(tripsPerTraveler, allDestinations, tripsRepo)
+  displayTotalCostThisYear(totalCostThisYear)
+}
 
-  let tripsData;
+function displayAllTrips(tripsPerTraveler, allDestinations, tripsRepo) {
 
-  allTrips.forEach((trip) => {
-    const matchingDest = destinationsOfTrips.find()
+  let tripsData = ''
+  tripsPerTraveler.forEach((trip) => {
+    const tripDestination = allDestinations.findDestination(trip)
+    const tripTotalCost = tripsRepo.totalCostPerTrip(trip, tripDestination)
+    const endDate = tripsRepo.getEndDate(trip)
+
+
     tripsData += 
     `<section class="card">
-      <img alt="image-here">
-      <div>
-        <p>Destination</p>
-        <p>Date</p>
-        <p>Cost Estimate</p>
-        <p>Guests</p>
+      <img class="trip-img" src=${tripDestination.image} alt=${tripDestination.alt} width="300" height="200">
+      <div class="trip-info">
+        <p class="destination">${tripDestination.destination}</p>
+        <p>${trip.date} - ${endDate}</p>
+        <p>Estimated Cost: $${tripTotalCost}</p>
+        <p>Guests: ${trip.travelers}</p>
       </div>
     </section>`
   })
+
+  tripsDisplay.innerHTML = tripsData
+}
+
+function displayTotalCostThisYear(totalCost) {
+  costThisYear.innerText = `$${totalCost}`
 }
