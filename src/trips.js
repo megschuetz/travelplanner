@@ -1,11 +1,10 @@
 class Trips {
-  constructor(data, id){
+  constructor(data){
     this.tripsRepo = data
-    this.travelersId = id
   }
  
-  getAllTrips(){
-    this.repo.filter(trip => trip.userID === this.travelersId)
+  getAllTrips(id){
+    return this.tripsRepo.filter(trip => trip.userID === id)
   }
 
   getPastTrips(){
@@ -24,3 +23,6 @@ class Trips {
     
   }
 }
+
+
+export default Trips;
