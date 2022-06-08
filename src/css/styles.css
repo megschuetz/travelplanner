@@ -1,8 +1,7 @@
 * { border: 1px solid black; }
 
 
-body {
-  /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
+body { 
   background-color: whitesmoke;
   margin: 0px 0px 100px;
 }
@@ -29,10 +28,29 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 5px 5px;
+  box-shadow: 3px 4px 6px;
   border-radius: 25px;
   margin: 30px;
   width: 70%;
+}
+
+.photo {
+  position: relative;
+}
+
+.status-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  height: 16px;
+  width: 45px;
+  border-radius: 10px;
+  position: absolute;
+	top: 0;
+	left: 0;
+  padding: 10px;
+  margin: 15px;
 }
 
 footer {
@@ -45,4 +63,4 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-}
+} 

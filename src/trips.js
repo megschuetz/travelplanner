@@ -6,7 +6,19 @@ class Trips {
   }
  
   getAllTrips(id){
-    return this.tripsRepo.filter(trip => trip.userID === id)
+    const allTrips = this.tripsRepo.filter(trip => trip.userID === id)
+    return allTrips.sort((a,b) => new Date(b.date) - new Date(a.date))
+  }
+
+  checkTripTimeEra(trip) {
+    const today = new Date()
+    if(today > new Date(trip.date) && trip.status === 'pending'){
+      return 'Pending'
+    } else if(today > new Date(trip.date)) {
+      return 'Past'
+    } else {
+      return 'Upcoming'
+    }
   }
 
   totalCostPerTrip(trip, destination){
@@ -29,29 +41,6 @@ class Trips {
     } else {
       return 0
     }
-  }
-
-
-
-
-
-
-
-
-  getPastTrips(){
-
-  }
-
-  getPresentTrips(){
-
-  }
-
-  getUpComingTrips(){
-
-  }
-
-  getPendingTrips(){
-    
   }
 }
 

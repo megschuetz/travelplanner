@@ -1,5 +1,3 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 import './css/styles.css';
 import './images/turing-logo.png';
 import Travelers from './traveler';
@@ -35,7 +33,6 @@ function tripsHelper(tripsData, destinationsData){
   
   const allDestinations = new Destinations(destinationsData)
   const totalCostThisYear = tripsRepo.totalCostPerYear(tripsPerTraveler, allDestinations)
-  console.log('alltrips', tripsRepo.totalCostPerYear(tripsPerTraveler, allDestinations))
 
   displayAllTrips(tripsPerTraveler, allDestinations, tripsRepo)
   displayTotalCostThisYear(totalCostThisYear)
@@ -48,11 +45,17 @@ function displayAllTrips(tripsPerTraveler, allDestinations, tripsRepo) {
     const tripDestination = allDestinations.findDestination(trip)
     const tripTotalCost = tripsRepo.totalCostPerTrip(trip, tripDestination)
     const endDate = tripsRepo.getEndDate(trip)
+    const tripTimeEra = tripsRepo.checkTripTimeEra(trip)
 
 
     tripsData += 
     `<section class="card">
-      <img class="trip-img" src=${tripDestination.image} alt=${tripDestination.alt} width="300" height="200">
+      <div class="photo">
+        <div class="status-label">
+          <p>${tripTimeEra}</p>
+        </div>
+        <img class="trip-img" src=${tripDestination.image} alt=${tripDestination.alt} width="300" height="200">
+      </div>
       <div class="trip-info">
         <p class="destination">${tripDestination.destination}</p>
         <p>${trip.date} - ${endDate}</p>
