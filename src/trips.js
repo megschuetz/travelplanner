@@ -37,7 +37,7 @@ class Trips {
         total += this.totalCostPerTrip(trip, destination)
         return total
       },0)
-      return totalCost
+      return totalCost + (totalCost * 0.1)
     } else {
       return 0
     }

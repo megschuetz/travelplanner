@@ -1,8 +1,8 @@
-* { border: 1px solid black; }
-
+/* * { border: 1px solid black; } */
 
 body { 
-  background-color: whitesmoke;
+  background-color: #E7E7E7;
+  font-family: Avanta Garde, sans-serif;
   margin: 0px 0px 100px;
 }
 
@@ -15,6 +15,74 @@ header {
 .company-name {
  display: flex;
  align-items: center;
+ margin-left: 15px;
+}
+
+h1 {
+  margin-left: 10px;
+  color: #0B3954;
+}
+
+h2 {
+  margin-right: 14px;
+  color: #0B3954;
+}
+
+h3 {
+  color: #0B3954;
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+.selections {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #0B3954;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.destinations-picker,
+.guests-picker,
+.duration-picker,
+.date-picker {
+  padding: 8px 12px;
+  background-color: #DCDCDC;
+  border: 1px solid #BEBEBE;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.destinations-picker:hover,
+.guests-picker:hover,
+.duration-picker:hover,
+.date-picker:hover {
+  border: 1px solid	#989898;
+}
+
+.submit {
+  background-color: #FF6663;
+  color: white;
+  border-radius: 5px;
+  margin-top: 30px;
+  border: none;
+  padding: 10px 40px;
+  font-size: 18px;
 }
 
 .trips {
@@ -26,25 +94,31 @@ header {
 
 .card {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  box-shadow: 3px 4px 6px;
+  box-shadow: 3px 4px 6px #B8B8B8;
   border-radius: 25px;
   margin: 30px;
   width: 70%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .photo {
   position: relative;
+  border-radius: 25px 0 0 25px;
+  margin: -1px;
+  overflow: hidden;
 }
 
 .status-label {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  height: 16px;
-  width: 45px;
+  background-color: #FF6663;
+  color: white;
+  height: 12px;
+  width: 65px;
   border-radius: 10px;
   position: absolute;
 	top: 0;
@@ -53,7 +127,22 @@ header {
   margin: 15px;
 }
 
+.trip-info {
+  margin-left: 40px;
+}
+
+.destination {
+  font-size: 30px;
+  font-weight: bold;
+  color: #0B3954;
+  margin-top: 14px;
+  margin-bottom: 15px;
+}
+
 footer {
+  background-color: #0B3954;
+  color: #E7E7E7;
+  font-size: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -64,3 +153,8 @@ footer {
   left: 0;
   right: 0;
 } 
+
+.spent-this-year {
+  margin-left: 10px;
+  margin-right: 25px;
+}
