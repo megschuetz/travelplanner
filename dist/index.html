@@ -14,15 +14,33 @@
       </div>
       <h2>Traveler, Name</h2>
     </header>
-    <section>
-      Input Section Trip Requests
-    </section>
+    <form>
+      <h3>Start Planning Your Trip</h3>
+      <div class="selections">
+        <div class="stack">
+          <label>Choose destination:</label>
+          <select class="destinations-picker"></select>
+        </div>
+        <div class="date stack">
+          <label>Day Leaving:</label>
+        </div>
+        <div class="guests stack">
+          <label>Guests:</label>
+          <select class="guests-picker"></select>
+        </div>
+        <div class="duration stack">
+          <label>Duration:</label>
+          <select class="duration-picker"></select>
+        </div>
+      </div>
+      <button class="submit" type="submit" value="Submit">Submit</button>
+    </form>
     <section class="trips">
       <section class="card"></section>
     </section>
     <footer>
       <p id="total-cost-this-year"></p>
-      <p>Spent This Year</p>
+      <p class="spent-this-year">Spent This Year</p>
     </footer>
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
