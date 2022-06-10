@@ -10,4 +10,12 @@ const travelersData = fetchData(travelersApi)
 const destinationsData = fetchData(destinationsApi)
 const tripsData = fetchData(tripsApi)
 
-export{travelersData, destinationsData, tripsData}
+const addNewTrip = (postObject) => {
+  return fetch('http://localhost:3001/api/v1/trips', {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(postObject)
+  })
+}
+
+export{travelersData, destinationsData, tripsData, addNewTrip, fetchData, tripsApi}

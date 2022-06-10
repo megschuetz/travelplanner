@@ -16,24 +16,32 @@
     </header>
     <form>
       <h3>Start Planning Your Trip</h3>
+      <h4 class="hidden">Click Below to Confirm</h4>
       <div class="selections">
         <div class="stack">
           <label>Choose destination:</label>
-          <select class="destinations-picker"></select>
+          <select class="destinations-picker choice" placeholder="destinations">
+            <option disabled selected value> -- select an option -- </option>
+          </select>
         </div>
-        <div class="date stack">
+        <div class="stack">
           <label>Day Leaving:</label>
+          <input class="date-picker choice" type="date" min="" name="date"/>
         </div>
         <div class="guests stack">
           <label>Guests:</label>
-          <select class="guests-picker"></select>
+          <select class="guests-picker choice">
+            <option disabled selected value> -- select an option -- </option>
+          </select>
         </div>
         <div class="duration stack">
           <label>Duration:</label>
-          <select class="duration-picker"></select>
+          <select class="duration-picker choice">
+            <option disabled selected value> -- select an option -- </option>
+          </select>
         </div>
       </div>
-      <button class="submit" type="submit" value="Submit">Submit</button>
+      <button class="submit-button" type="submit" disabled=true>Estimate Cost</button>
     </form>
     <section class="trips">
       <section class="card"></section>
@@ -42,8 +50,6 @@
       <p id="total-cost-this-year"></p>
       <p class="spent-this-year">Spent This Year</p>
     </footer>
-    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
-
   </body>
 </html>
