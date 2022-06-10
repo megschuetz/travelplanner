@@ -107,7 +107,7 @@ function displayAllTrips(tripsPerTraveler) {
 }
 
 function displayTotalCostThisYear(totalCost) {
-  costThisYear.innerText = `$${totalCost}`
+  costThisYear.innerText = totalCost
 }
 
 //FORM 

@@ -6,7 +6,7 @@ class Trips {
   }
  
   getAllTrips(id){
-    if(!this.tripsRepo.filter(trip => trip.userID === id)) {
+    if(!this.tripsRepo.find(trip => trip.userID === id)) {
       return 'Can not find any trips for user'
     }
     const allTrips = this.tripsRepo.filter(trip => trip.userID === id)
@@ -40,9 +40,9 @@ class Trips {
         total += this.totalCostPerTrip(trip, destination)
         return total
       },0)
-      return totalCost + (totalCost * 0.1)
+      return `$${totalCost + (totalCost * 0.1)}`
     } else {
-      return 0
+      return 'No Trips Taken'
     }
   }
 }
