@@ -48,12 +48,6 @@ Promise.all([travelersData, destinationsData, tripsData])
 
 //HELPERS
 
-function buildFormHelper() {
-  preventPickingPastDates()
-  buildDropDown()
-  displayDestinationOptions(allDestinations.destinationsRepo)
-}
-
 function travelerHelper(data) {
   allTravelers = new Travelers(data)
   travelerName.innerText = `Welcome, ${allTravelers.findTraveler(displayedUsersID)}`
@@ -69,11 +63,16 @@ function tripsHelper(tripsData){
   console.log('alltrips', allTrips)
   const tripsPerTraveler = allTrips.getAllTrips(displayedUsersID)
   const totalCostThisYear = allTrips.totalCostPerYear(tripsPerTraveler, allDestinations)
- 
+  
   displayAllTrips(tripsPerTraveler)
   displayTotalCostThisYear(totalCostThisYear)
 }
 
+function buildFormHelper() {
+  preventPickingPastDates()
+  buildDropDown()
+  displayDestinationOptions(allDestinations.destinationsRepo)
+}
 
 //DISPLAY ALL TRIPS
 
