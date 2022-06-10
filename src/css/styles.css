@@ -136,6 +136,10 @@ form {
   margin: 15px;
 }
 
+.Pending {
+  background-color: gray;
+}
+
 .trip-info {
   margin-left: 40px;
 }

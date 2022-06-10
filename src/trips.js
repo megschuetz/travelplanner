@@ -6,13 +6,16 @@ class Trips {
   }
  
   getAllTrips(id){
+    if(!this.tripsRepo.filter(trip => trip.userID === id)) {
+      return 'Can not find any trips for user'
+    }
     const allTrips = this.tripsRepo.filter(trip => trip.userID === id)
     return allTrips.sort((a,b) => new Date(b.date) - new Date(a.date))
   }
 
   checkTripTimeEra(trip) {
     const today = new Date()
-    if(today > new Date(trip.date) && trip.status === 'pending'){
+    if(today < new Date(trip.date) && trip.status === 'pending'){
       return 'Pending'
     } else if(today > new Date(trip.date)) {
       return 'Past'

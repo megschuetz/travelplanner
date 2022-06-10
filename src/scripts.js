@@ -3,8 +3,7 @@ import './images/turing-logo.png';
 import Travelers from './traveler';
 import Trips from './trips';
 import Destinations from './destinations';
-import PendingTrip from './pending-trip';
-import {travelersData, destinationsData, tripsData} from './apiCalls';
+import {travelersData, destinationsData, tripsData, addNewTrip, fetchData, tripsApi} from './apiCalls';
 import dayjs from 'dayjs';
 
 //Query Selectors
@@ -18,76 +17,79 @@ const datePicker = document.querySelector('.date-picker')
 const button = document.querySelector('.submit-button')
 const messageBanner = document.querySelector('h3')
 const doubleClickMsg = document.querySelector('h4')
-const formSelections = document.querySelector('.selections')
+const form = document.querySelector('.selections')
 
 //Event Listeners
 destinationsPicker.addEventListener('input', checkInput)
-datePicker.addEventListener('input', checkInput)
+datePicker.addEventListener('input', () => {checkDate(), checkInput()})
 durationPicker.addEventListener('input', checkInput)
 guestPicker.addEventListener('input', checkInput)
 
-button.addEventListener('click', estimateCost)
-// button.addEventListener('dblclick' postTrip)
+button.addEventListener('click', checkNumberOfClick)
 window.addEventListener('load', buildFormHelper)
-
 
 
 const displayedUsersID = Math.floor(Math.random() * 50)
 let allDestinations;
-let tripsRepo;
-
+let allTrips;
+let allTravelers;
+let newPendingTrip;
+let today;
 
 
 Promise.all([travelersData, destinationsData, tripsData])
   .then((data) => {
     travelerHelper(data[0].travelers);
-    tripsHelper(data[2].trips, data[1].destinations);
+    destinationsHelper(data[1].destinations);
+    tripsHelper(data[2].trips);
   })
-  .catch((error) => console.log(error));
+  .catch((error) => {console.log(error), displayErrorMessage()});
 
 
-
-// const daySelected = dayjs(datePicker.value).format('YYYY/MM/DD')
-// const newTrip = new PendingTrip(displayedUsersID, destinationsPicker.value, guestPicker.value, daySelected, durationPicker.value)
-
+//HELPERS
 
 function buildFormHelper() {
   preventPickingPastDates()
   buildDropDown()
+  displayDestinationOptions(allDestinations.destinationsRepo)
 }
 
 function travelerHelper(data) {
-  const travelRepo = new Travelers(data)
-  travelerName.innerText = `Welcome, ${travelRepo.findTraveler(displayedUsersID)}`
+  allTravelers = new Travelers(data)
+  travelerName.innerText = `Welcome, ${allTravelers.findTraveler(displayedUsersID)}`
 }
 
-function tripsHelper(tripsData, destinationsData){
-  tripsRepo = new Trips(tripsData)
-  const tripsPerTraveler = tripsRepo.getAllTrips(displayedUsersID)
-  
+function destinationsHelper(destinationsData) {
   allDestinations = new Destinations(destinationsData)
-  const totalCostThisYear = tripsRepo.totalCostPerYear(tripsPerTraveler, allDestinations)
-  
-  displayAllTrips(tripsPerTraveler)
-  displayTotalCostThisYear(totalCostThisYear)
   displayDestinationOptions(allDestinations.destinationsRepo)
 }
+
+function tripsHelper(tripsData){
+  allTrips = new Trips(tripsData)
+  console.log('alltrips', allTrips)
+  const tripsPerTraveler = allTrips.getAllTrips(displayedUsersID)
+  const totalCostThisYear = allTrips.totalCostPerYear(tripsPerTraveler, allDestinations)
+ 
+  displayAllTrips(tripsPerTraveler)
+  displayTotalCostThisYear(totalCostThisYear)
+}
+
 
 //DISPLAY ALL TRIPS
 
 function displayAllTrips(tripsPerTraveler) {
-  
+  console.log('tripsPerTaveler,', tripsPerTraveler)
   let tripsData = ''
   tripsPerTraveler.forEach((trip) => {
     const tripDestination = allDestinations.findDestination(trip)
-    const tripTotalCost = tripsRepo.totalCostPerTrip(trip, tripDestination)
-    const endDate = tripsRepo.getEndDate(trip)
-    const tripTimeEra = tripsRepo.checkTripTimeEra(trip)
+    const tripTotalCost = allTrips.totalCostPerTrip(trip, tripDestination)
+    const endDate = allTrips.getEndDate(trip)
+    const tripTimeEra = allTrips.checkTripTimeEra(trip)
     
     tripsData += 
     `<section class="card">
     <div class="photo">
-    <div class="status-label">
+    <div class="status-label ${tripTimeEra}">
     <p>${tripTimeEra}</p>
     </div>
     <img class="trip-img" src=${tripDestination.image} alt=${tripDestination.alt} width="300" height="205">
@@ -120,8 +122,8 @@ function displayDestinationOptions(destinations) {
 }
 
 function preventPickingPastDates() {
-  const today = Date()
-  datePicker.min = dayjs(today).format('YYYY-MM-DD')
+  today = dayjs(Date()).format('YYYY-MM-DD')
+  datePicker.min = dayjs(today).add(1, 'day').format('YYYY-MM-DD')
 }
 
 function buildDropDown() {
@@ -133,26 +135,76 @@ function buildDropDown() {
   guestPicker.innerHTML += numbers
 }
 
-function checkInput(event) {
-  if(destinationsPicker.value && datePicker.value && durationPicker.value && guestPicker.value) {
+//WORK WITH FORM
+
+function checkInput() {
+  console.log(today)
+  if(destinationsPicker.value && datePicker.value > today && durationPicker.value && guestPicker.value) {
     button.disabled = false
   }
 }
 
-//WORK WITH FORM
+function checkDate() {
+  if(datePicker.value < today){
+    messageBanner.innerText = 'Opps, choose a date in the future!'
+  }
+}
+
+let clickCounter = 0
+function checkNumberOfClick(){
+  clickCounter ++
+  if(clickCounter === 1){
+    estimateCost()
+  } else if (clickCounter === 2) {
+    postTrip(newPendingTrip)
+  }
+}
 
 function estimateCost() {
   event.preventDefault()
-  const trip = { duration: durationPicker.value, travelers: guestPicker.value, destinationID: Number(destinationsPicker.value) }
-  const destination = allDestinations.findDestination(trip)
-  const newTripEstimatedCost = tripsRepo.totalCostPerTrip(trip, destination)
+  newPendingTrip = { 
+    id: allTrips.tripsRepo.length + 1,
+    userID: displayedUsersID,
+    destinationID: Number(destinationsPicker.value),
+    travelers: guestPicker.value,
+    date: dayjs(datePicker.value).format('YYYY/MM/DD'),
+    duration: durationPicker.value, 
+    status: 'pending',
+    suggestedActivities: []
+  } 
+  const destination = allDestinations.findDestination(newPendingTrip)
+  const newTripEstimatedCost = allTrips.totalCostPerTrip(newPendingTrip, destination)
   messageBanner.innerText = `Your trips estimated cost is $${newTripEstimatedCost}.`
   button.innerText = 'Submit To Agent'
-  toggleForm(doubleClickMsg, formSelections)
-  console.log('estimate', newTripEstimatedCost)
+  toggleForm(doubleClickMsg, form)
 }
 
 function toggleForm(appear, hide) {
   appear.classList.remove('hidden')
   hide.classList.add('hidden')
+}
+
+function postTrip(trip) {
+  event.preventDefault()
+  addNewTrip(trip)
+  .then(response => { 
+    if(response.status === 422){
+      displayErrorMessage()
+    }
+    return response.json()})
+    .then(object => {
+      fetchData(tripsApi).then(data => {
+      tripsHelper(data.trips)
+    })
+  })
+    toggleForm(form, doubleClickMsg)
+    buildFormHelper()
+    datePicker.value = ''
+    messageBanner.innerText = 'Start Planning Your Trip'
+    button.innerText = 'Estimate Cost'
+    button.disabled = true;
+}
+
+function displayErrorMessage() {
+  messageBanner.innerText = 'Oppsie daisy something went wrong!'
 }
