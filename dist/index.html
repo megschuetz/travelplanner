@@ -12,9 +12,23 @@
         <img src="./images/turing-logo.png" alt="turing logo" width="50" height="50">
         <h1>Travel Planner</h1>
       </div>
-      <h2>Traveler, Name</h2>
+      <h2 class="hidden">Traveler, Name</h2>
+      <button class="login-btn">Log In</button>
+      <div class="pop-up">
+        <div class="close-btn">&times;</div>
+        <form class="login-form">
+          <h2>Log In</h2>
+          <div class="login-inputs">
+            <label  for="username">Username</label>
+            <input class="username" type="text" id="username" placeholder="Enter Username">       
+            <label  for="password">Password</label>
+            <input class="password" type="text" id="password" placeholder="Enter Password">
+            <button class="signin-btn">Sign In</button>
+          </div>
+        </form>
+      </div>
     </header>
-    <form>
+    <form class="planning-form">
       <h3>Start Planning Your Trip</h3>
       <h4 class="hidden">Click Below to Confirm</h4>
       <div class="selections">
