@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 
 class Trips {
-  constructor(data){
+  constructor(data) {
     this.tripsRepo = data
   };
  
-  getAllTrips(id){
+  getAllTrips(id) {
     if(!this.tripsRepo.find(trip => trip.userID === id)) {
       return 'Can not find any trips for user'
     }
@@ -24,7 +24,7 @@ class Trips {
     }
   };
 
-  totalCostPerTrip(trip, destination){
+  totalCostPerTrip(trip, destination) {
     return (trip.duration * destination.estimatedLodgingCostPerDay) + (trip.travelers * destination.estimatedFlightCostPerPerson)
   };
 
