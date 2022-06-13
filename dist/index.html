@@ -19,23 +19,23 @@
       <h4 class="hidden">Click Below to Confirm</h4>
       <div class="selections">
         <div class="stack">
-          <label>Choose destination:</label>
+          <label for="destinations">Choose destination:</label>
           <select class="destinations-picker choice" placeholder="destinations">
             <option disabled selected value> -- select an option -- </option>
           </select>
         </div>
         <div class="stack">
-          <label>Day Leaving:</label>
-          <input class="date-picker choice" type="date" min="" name="date"/>
+          <label for="dayDeparting">Day Leaving:</label>
+          <input class="date-picker choice" aria-label="date leaving format month/day/full year" type="date" min="" name="date"/>
         </div>
         <div class="guests stack">
-          <label>Guests:</label>
+          <label for="numberOfGuests">Guests:</label>
           <select class="guests-picker choice">
             <option disabled selected value> -- select an option -- </option>
           </select>
         </div>
         <div class="duration stack">
-          <label>Duration:</label>
+          <label for="durationOfTrip">Duration:</label>
           <select class="duration-picker choice">
             <option disabled selected value> -- select an option -- </option>
           </select>
