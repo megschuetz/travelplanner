@@ -80,7 +80,7 @@ describe('Trips',() => {
     }];
 
     allTrips = new Trips(tripsData);
-    destinations = new Destination(destinationData)
+    destinations = new Destination(destinationData);
   });
 
   it('should include all trips in repo', () => {
