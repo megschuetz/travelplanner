@@ -119,7 +119,7 @@ describe('Trips',() => {
 
   it('should get the end date of the trip', () => {
     const getEndDate = allTrips.getEndDate(tripsData[2])
-    expect(getEndDate).to.equal('2022/10/09')
+    expect(getEndDate).to.equal('Oct 9, 2022')
   });
 
   it('should total cost of trips this year', () => {

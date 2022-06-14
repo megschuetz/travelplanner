@@ -9,6 +9,6 @@ class Travelers {
     };
     return this.travelRepo.find(traveler => traveler.id === id).name
   };
-}
+};
 
 export default Travelers;

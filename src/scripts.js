@@ -7,9 +7,8 @@ import {travelersData, destinationsData, tripsData, addNewTrip, fetchData, trips
 import dayjs from 'dayjs';
 
 //Query Selectors
-const submitNewTrip = document.querySelector('.submit-button');
 const costThisYear = document.querySelector('#total-cost-this-year');
-const doubleClickMsg = document.querySelector('h4');
+const clickToConfirm = document.querySelector('h4');
 const destinationsPicker = document.querySelector('.destinations-picker');
 const datePicker = document.querySelector('.date-picker');
 const durationPicker = document.querySelector('.duration-picker');
@@ -17,25 +16,28 @@ const form = document.querySelector('.selections');
 const formContainer = document.querySelector('.planning-form');
 const footer = document.querySelector('footer');
 const guestPicker = document.querySelector('.guests-picker');
+const invalidMsg = document.querySelector('.inavlid-banner');
 const messageBanner = document.querySelector('h3');
 const passwordInput = document.querySelector('.password');
 const popupLogin = document.querySelector('.login-form');
+const submitNewTrip = document.querySelector('.submit-button');
 const signinButton = document.querySelector('.signin-btn');
 const travelerName = document.querySelector('h2');
 const tripsDisplay = document.querySelector('.trips');
 const usernameInput = document.querySelector('.username');
 
 //Event Listeners
-destinationsPicker.addEventListener('input', checkInput);
-datePicker.addEventListener('input', () => {checkDate(), checkInput()});
-durationPicker.addEventListener('input', checkInput);
-guestPicker.addEventListener('input', checkInput);
-
-submitNewTrip.addEventListener('click', checkNumberOfClick);
-
 usernameInput.addEventListener('input', checkLogIn);
 passwordInput.addEventListener('input', checkLogIn);
 signinButton.addEventListener('click', checkCredentials);
+
+destinationsPicker.addEventListener('input', checkInput);
+datePicker.addEventListener('input', checkInput);
+durationPicker.addEventListener('input', checkInput);
+guestPicker.addEventListener('input', checkInput);
+
+submitNewTrip.addEventListener('click', checkDate);
+
 
 //Global Variables
 
@@ -67,6 +69,8 @@ function checkCredentials() {
   if(validUserIds.includes(usernameInput.value) && passwordInput.value === 'travel') {
     usersID = Number(usernameInput.value.split('r').pop());
     loadUsersInfo();
+  } else {
+    invalidMsg.classList.remove('white')
   };
 };
 
@@ -120,7 +124,7 @@ function buildFormHelper() {
 //DISPLAY ALL TRIPS
 
 function displayAllTrips(tripsPerTraveler) {
-  let tripsData = ''
+  let tripsData = '';
   tripsPerTraveler.forEach((trip) => {
     const tripDestination = allDestinations.findDestination(trip);
     const tripTotalCost = allTrips.totalCostPerTrip(trip, tripDestination);
@@ -137,9 +141,9 @@ function displayAllTrips(tripsPerTraveler) {
       </div>
       <div class="trip-info">
         <p class="destination">${tripDestination.destination}</p>
-        <p>${trip.date} - ${endDate}</p>
-        <p>Estimated Cost: $${tripTotalCost}</p>
-        <p>Guests: ${trip.travelers}</p>
+        <p class="trip-details">${dayjs(trip.date).format('MMM D, YYYY')} - ${endDate}</p>
+        <p class="trip-details">Guests <i>${trip.travelers}</i></p>
+        <p class="trip-details"><b>$${tripTotalCost}</b> total</p>
       </div>
     </section>`
   });
@@ -179,7 +183,7 @@ function buildDropDown() {
 //WORK WITH FORM
 
 function checkInput() {
-  if(destinationsPicker.value && datePicker.value > today && durationPicker.value && guestPicker.value) {
+  if(destinationsPicker.value && datePicker.value && durationPicker.value && guestPicker.value) {
     submitNewTrip.disabled = false;
   };
 };
@@ -187,15 +191,17 @@ function checkInput() {
 function checkDate() {
   if(datePicker.value < today){
     messageBanner.innerText = 'Opps, choose a date in the future!';
+  } else {
+    checkNumberOfClick();
   };
 };
 
-let clickCounter = 0
-function checkNumberOfClick(){
+let clickCounter = 0;
+function checkNumberOfClick() {
   clickCounter ++
-  if(clickCounter === 1){
+  if(clickCounter === 1) {
     estimateCost();
-  } else if (clickCounter === 2) {
+  } else if (clickCounter > 1) {
     postTrip(newPendingTrip);
   };
 };
@@ -216,7 +222,7 @@ function estimateCost() {
   const newTripEstimatedCost = allTrips.totalCostPerTrip(newPendingTrip, destination);
   messageBanner.innerText = `Your trips estimated cost is $${newTripEstimatedCost}.`;
   submitNewTrip.innerText = 'Submit To Agent';
-  toggleForm(doubleClickMsg, form);
+  toggleForm(clickToConfirm, form);
 };
 
 function toggleForm(appear, hide) {
@@ -228,7 +234,7 @@ function postTrip(trip) {
   event.preventDefault();
   addNewTrip(trip)
   .then(response => { 
-    if(response.status === 422){
+    if(response.status === 422) {
       displayErrorMessage()
     }
     return response.json()})
@@ -237,7 +243,7 @@ function postTrip(trip) {
       tripsHelper(data.trips)
     })
   });
-    toggleForm(form, doubleClickMsg);
+    toggleForm(form, clickToConfirm);
     buildFormHelper();
     datePicker.value = '';
     messageBanner.innerText = 'Start Planning Your Trip';
