@@ -1,5 +1,3 @@
-/* * { border: 1px solid black; } */
-
 body { 
   background-color: #E7E7E7;
   font-family: Avanta Garde, sans-serif;
@@ -36,54 +34,29 @@ h3 {
 
 /* ------ Login Form ----- */
 
-.login-btn {
-  background-color: #FF6663;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  padding: 6px 25px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.pop-up {
+.login-form {
   position: absolute;
   z-index: 1;
-  top: -150%;
+  top: 45%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.25);
-  width: 30%;
+  transform: translate(-50%, -50%);
+  width: 25%;
   height: 300px;
   padding: 20px 30px;
   background: white;
   box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  transition: top 0ms ease-in-out 200ms, 
-              opacity 200ms ease-in-out 0ms,
-              transform 0ms ease-in-out 0ms;
+  animation: 1s slide-down;
 }
 
-.pop-up .active {
-  top: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  transition: top 0ms ease-in-out 0ms, 
-              opacity 200ms ease-in-out 0ms,
-              transform 0ms ease-in-out 0ms;
-}
+@keyframes slide-down {
+  from {
+    margin-top: -35%;
+  }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px; 
-  width: 15px;
-  height: 15px;
-  background: #888;
-  color: #EEE;
-  text-align: center;
-  line-height: 15px;
-  border-radius: 15px;
-  cursor: pointer;
+  to {
+    margin-bottom: 65%;
+  }
 }
 
 form > h2 {
@@ -185,9 +158,7 @@ form > h2 {
   opacity: .6;
 }
 
-.hidden {
-  display: none !important;
-}
+/* ------ Trips Display ------ */
 
 .trips {
   display: flex;
@@ -250,10 +221,9 @@ form > h2 {
 footer {
   background-color: #0B3954;
   color: #E7E7E7;
-  font-size: 20px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
   position: fixed;
   height: 50px;
   width: 100%;
@@ -262,7 +232,29 @@ footer {
   right: 0;
 } 
 
+.total {
+  display: flex;
+  font-size: 20px;
+  height: 25px
+}
+
 .spent-this-year {
+  margin-top: 7px;
+  margin-right: 17px;
   margin-left: 10px;
-  margin-right: 25px;
+}
+
+#total-cost-this-year {
+  margin-top: 7px;
+}
+
+.fee {
+  font-size: 11px;
+  margin-right: 17px;
+  margin-top: 5px;
+  height: 25px;
+}
+
+.hidden {
+  display: none !important;
 }
