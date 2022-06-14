@@ -10,24 +10,33 @@ header {
   justify-content: space-between;
 }
 
+h1, h2, h3, 
+.selections,  
+.destination {
+  color: #0B3954;
+}
+
+.status-label, 
+.signin-btn,
+.submit-button {
+  background-color:#FF6663;
+}
+
 .company-name {
- display: flex;
- align-items: center;
- margin-left: 15px;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
 }
 
 h1 {
   margin-left: 10px;
-  color: #0B3954;
 }
 
 h2 {
   margin-right: 14px;
-  color: #0B3954;
 }
 
 h3 {
-  color: #0B3954;
   font-size: 30px;
   margin-bottom: 40px;
 }
@@ -53,7 +62,7 @@ h3 {
   from {
     margin-top: -35%;
   }
-
+  
   to {
     margin-bottom: 65%;
   }
@@ -61,9 +70,19 @@ h3 {
 
 form > h2 {
   text-align: center;
-  color:#0B3954;
-  margin: 10px 0 20px;
+  margin: 10px 0 7px;
   font-size: 25px;
+}
+
+.inavlid-banner {
+  font-size: 12px;
+  color: red;
+  text-align: center;
+  margin: 0;
+}
+
+.white {
+  color: white;
 }
 
 .login-inputs {
@@ -84,7 +103,6 @@ form > h2 {
   height: 40px;
   border: none;
   outline: none;
-  background: #FF6663;
   color: white;
   font-size: 17px;
   margin-top: 24px;
@@ -115,7 +133,6 @@ form > h2 {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #0B3954;
 }
 
 .stack {
@@ -144,7 +161,6 @@ form > h2 {
 }
 
 .submit-button {
-  background-color: #FF6663;
   color: white;
   border-radius: 5px;
   margin-top: 30px;
@@ -190,7 +206,6 @@ form > h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FF6663;
   color: white;
   height: 12px;
   width: 65px;
@@ -210,10 +225,13 @@ form > h2 {
   margin-left: 40px;
 }
 
+.trip-details {
+  font-weight: 200;
+}
+
 .destination {
   font-size: 30px;
   font-weight: bold;
-  color: #0B3954;
   margin-top: 14px;
   margin-bottom: 15px;
 }
@@ -256,5 +274,5 @@ footer {
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
