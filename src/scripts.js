@@ -202,6 +202,7 @@ function checkNumberOfClick() {
   if(clickCounter === 1) {
     estimateCost();
   } else if (clickCounter > 1) {
+    clickCounter = 0;
     postTrip(newPendingTrip);
   };
 };
